@@ -25,7 +25,7 @@ class Users extends Component {
     pages: 0,
     currentPage: 0,
     searchTerm: '',
-    highlighted: false,
+    searchedText: '',
   };
 
   fetchUsers = (id, searchTerm) => {
@@ -65,9 +65,12 @@ class Users extends Component {
   }
 
   onClearClick = () => {
-    this.setState({ searchTerm: '', highlighted: false }, () => {
-      this.props.history.push('/users');
-    });
+    this.setState(
+      { searchTerm: '', highlighted: false, searchedText: '' },
+      () => {
+        this.props.history.push('/users');
+      }
+    );
   };
 
   onPageClick = (page, searchTerm) => {
@@ -87,9 +90,12 @@ class Users extends Component {
 
   onFormSubmit = event => {
     event.preventDefault();
-    this.setState({ highlighted: true }, () => {
-      this.redirect(1, this.state.searchTerm);
-    });
+    this.setState(
+      { highlighted: true, searchedText: this.state.searchTerm },
+      () => {
+        this.redirect(1, this.state.searchedText);
+      }
+    );
   };
 
   render() {
@@ -100,7 +106,14 @@ class Users extends Component {
       onFormSubmit,
       onClearClick,
     } = this;
-    const { count, pages, users, currentPage, searchTerm } = this.state;
+    const {
+      count,
+      pages,
+      users,
+      currentPage,
+      searchTerm,
+      searchedText,
+    } = this.state;
     return (
       <div>
         <section style={styles.searchSection}>
@@ -121,7 +134,7 @@ class Users extends Component {
           </small>
         </section>
         <div style={styles.Table}>
-          <Table users={users} />
+          <Table users={users} highlight={searchedText} />
         </div>
       </div>
     );

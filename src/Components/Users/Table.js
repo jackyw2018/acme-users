@@ -1,8 +1,9 @@
 import React from 'react';
 
 import Table from 'react-bootstrap/Table';
+import Highlight from './Highlight';
 
-const TableContent = ({ users }) => {
+const TableContent = ({ users, highlight }) => {
   const styles = {
     th: {
       textAlign: 'center',
@@ -28,11 +29,21 @@ const TableContent = ({ users }) => {
       <tbody>
         {users.map(({ id, firstName, lastName, middleName, email, title }) => (
           <tr key={id}>
-            <td style={styles.td}>{firstName}</td>
-            <td style={styles.td}>{lastName}</td>
-            <td style={styles.td}>{middleName}</td>
-            <td style={styles.td}>{email}</td>
-            <td style={styles.td}>{title}</td>
+            <td style={styles.td}>
+              <Highlight text={firstName} highlight={highlight} />
+            </td>
+            <td style={styles.td}>
+              <Highlight text={lastName} highlight={highlight} />
+            </td>
+            <td style={styles.td}>
+              <Highlight text={middleName} highlight={highlight} />
+            </td>
+            <td style={styles.td}>
+              <Highlight text={email} highlight={highlight} />
+            </td>
+            <td style={styles.td}>
+              <Highlight text={title} highlight={highlight} />
+            </td>
           </tr>
         ))}
       </tbody>
